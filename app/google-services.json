@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "479565270846",
+    "firebase_url": "https://iseetv-f34b1.firebaseio.com",
+    "project_id": "iseetv-f34b1",
+    "storage_bucket": "iseetv-f34b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479565270846:android:efd4efb48cb6dc7930266f",
+        "android_client_info": {
+          "package_name": "com.iseetv.tvonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479565270846-goevfem40e4c6s972e9dd4mv1irtqfek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJlkDMHI1p1eEStAhNRRMpTWag8ESLbnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479565270846-goevfem40e4c6s972e9dd4mv1irtqfek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
