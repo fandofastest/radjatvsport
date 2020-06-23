@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.iseetv.tvonline">
+    package="com.sportstv.tvonline">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.iseetv.tvonline.MyApplication"
+        android:name="com.sportstv.tvonline.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,7 +23,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity
-            android:name="com.iseetv.tvonline.SplashActivity"
+            android:name="com.sportstv.tvonline.SplashActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,27 +32,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iseetv.tvonline.MainActivity"
+            android:name="com.sportstv.tvonline.MainActivity"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.iseetv.tvonline.ChannelDetailsActivity"
+            android:name="com.sportstv.tvonline.ChannelDetailsActivity"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.iseetv.tvonline.SettingActivity"
+            android:name="com.sportstv.tvonline.SettingActivity"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.iseetv.tvonline.VideoPlayActivity"
+            android:name="com.sportstv.tvonline.VideoPlayActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensor" />
 
         <activity
-            android:name="com.iseetv.tvonline.TVPlayActivity"
+            android:name="com.sportstv.tvonline.TVPlayActivity"
             android:label="@string/app_name"
             android:screenOrientation="fullSensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

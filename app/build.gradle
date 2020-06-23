@@ -4,9 +4,9 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.iseetv.tvonline"
+        applicationId "com.footballtv.plesboltv"
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                                onesignal_app_id: "9d0b488d-3e45-40da-b50c-e4694076f614",
+                                onesignal_app_id: "8f16c5f0-e8c9-4c95-ad2f-c39f591322a3",
                                 onesignal_google_project_number: "REMOTE"]
         minSdkVersion 17
         targetSdkVersion 29
