@@ -18,13 +18,13 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.ixidev.gdpr.GDPRChecker;
 import com.sportstv.util.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.vov.vitamio.utils.Log;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -100,13 +100,6 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
-                    new GDPRChecker()
-                            .withContext(SplashActivity.this)
-                            .withPrivacyUrl(getString(R.string.privacy_url)) // your privacy url
-                            .withPublisherIds(admobappid) // your admob account Publisher id
-                            .withTestMode("9424DF76F06983D1392E609FC074596C") // remove this on real project
-                            .check();
-
 
 
 
@@ -127,7 +120,7 @@ public class SplashActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("exr",error);
             }
         });
 
@@ -221,6 +214,7 @@ public class SplashActivity extends AppCompatActivity {
     public  void kehome(){
         Intent intent = new Intent(SplashActivity.this,MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

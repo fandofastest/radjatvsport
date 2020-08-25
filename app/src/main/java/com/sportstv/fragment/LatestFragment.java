@@ -78,7 +78,7 @@ public class LatestFragment extends Fragment {
                 case "id":
                     getindoitem();
                     break;
-                case "kr":
+                case "sporttv":
                     getkritem();
                     break;
             }
@@ -151,7 +151,7 @@ public class LatestFragment extends Fragment {
     private void getkritem() {
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(Constant.BASEURLCHANNEL+"kr.m3u", new AsyncHttpResponseHandler() {
+        client.get(Constant.URLSPORT, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {

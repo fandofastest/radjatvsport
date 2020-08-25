@@ -147,11 +147,11 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 ((MainActivity) requireActivity()).hideShowBottomView(false);
                 ((MainActivity) requireActivity()).navigationItemSelected(1);
-                String categoryName = getString(R.string.Korea);
+                String categoryName = "Sport TV";
                 FragmentManager fm = getFragmentManager();
                 LatestFragment f1 = new LatestFragment();
                 Bundle args = new Bundle();
-                args.putString("info", "Sport TV");
+                args.putString("info", "sporttv");
                 f1.setArguments(args);
                 assert fm != null;
                 FragmentTransaction ft = fm.beginTransaction();

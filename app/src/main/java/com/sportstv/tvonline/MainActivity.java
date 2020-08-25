@@ -1,10 +1,13 @@
 package com.sportstv.tvonline;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,8 +16,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
@@ -25,13 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sportstv.adapter.NavAdapter;
 import com.sportstv.fragment.AllChannelFragment;
 import com.sportstv.fragment.HomeFragment;
 import com.sportstv.fragment.LatestFragment;
 import com.sportstv.fragment.SearchFragment;
 import com.sportstv.item.ItemNav;
-import com.sportstv.util.RecyclerTouchListener;
 
 import java.util.ArrayList;
 
@@ -39,11 +38,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    public NavAdapter navAdapter;
     private FragmentManager fragmentManager;
     ArrayList<ItemNav> mNavItem;
     BottomNavigationView navigation;
-    DrawerLayout drawer;
     MyApplication MyApp;
     TextView textName, textEmail;
     int previousSelect = 0;
@@ -132,35 +129,19 @@ public class MainActivity extends AppCompatActivity {
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+
+
+
+        GDPRcheckV2 gdpRcheckV2 = new GDPRcheckV2();
+        gdpRcheckV2.check(getApplicationContext(),MainActivity.this,SplashActivity.admobappid);
+
 
         mNavItem = new ArrayList<>();
         fillNavItem();
         textName = findViewById(R.id.nav_name);
         textEmail = findViewById(R.id.nav_email);
-        RecyclerView recyclerView = findViewById(R.id.navigation_list);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setFocusable(false);
-        navAdapter = new NavAdapter(MainActivity.this, mNavItem);
-        recyclerView.setAdapter(navAdapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(MainActivity.this, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                navigationClick(mNavItem.get(position).getId());
-            }
 
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
 
         HomeFragment homeFragment = new HomeFragment();
         loadFrag(homeFragment, getString(R.string.menu_home), fragmentManager);
@@ -219,32 +200,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void navigationClick(int position) {
-        drawer.closeDrawers();
-        switch (position) {
-            case 0:
-                navigationItemSelected(0);
-                navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
-                HomeFragment homeFragment = new HomeFragment();
-                loadFrag(homeFragment, getString(R.string.menu_home), fragmentManager);
-                hideShowBottomView(true);
-                break;
-            case 1:
-                navigationItemSelected(1);
-                LatestFragment latestFragment = new LatestFragment();
-                loadFrag(latestFragment, getString(R.string.menu_latest), fragmentManager);
-                hideShowBottomView(false);
-                break;
 
-
-
-
-            case 13:
-                navigationItemSelected(previousSelect);
-                startActivity(new Intent(MainActivity.this, SettingActivity.class));
-                break;
-        }
-    }
 
     private void fillNavItem() {
         mNavItem.add(new ItemNav(0, R.drawable.ic_home, getResources().getString(R.string.menu_home)));
@@ -290,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void navigationItemSelected(int position) {
         previousSelect = position;
-        navAdapter.setSelected(position);
     }
 
     public void setToolbarTitle(String Title) {
@@ -301,9 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (fragmentManager.getBackStackEntryCount() != 0) {
+         if (fragmentManager.getBackStackEntryCount() != 0) {
             String tag = fragmentManager.getFragments().get(fragmentManager.getBackStackEntryCount() - 1).getTag();
             setToolbarTitle(tag);
             //when search is click and goes back if home
@@ -313,20 +266,22 @@ public class MainActivity extends AppCompatActivity {
             }
             super.onBackPressed();
         } else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
+             CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
+                     .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
+                     .setTitle("Are You Sure ?")
+                     .setMessage("You will leave app.....")
+                     .addButton("Quit", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.END, new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                             finish();
+                             finishAffinity();
+                             System.exit(0);
 
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+                         }
+                     });
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
+// Show the alert
+             builder.show();
         }
     }
 }
