@@ -17,12 +17,15 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.sportstv.tvonline.ChannelDetailsActivity;
 import com.sportstv.tvonline.R;
 import com.sportstv.item.ItemChannel;
+import com.sportstv.tvonline.SplashActivity;
+import com.sportstv.util.Ads;
 import com.sportstv.util.Constant;
 import com.github.ornolfr.ratingview.RatingView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.sportstv.tvonline.SplashActivity.faninter;
 import static com.sportstv.tvonline.SplashActivity.inter;
 
 public class SliderAdapter extends PagerAdapter {
@@ -79,42 +82,24 @@ public class SliderAdapter extends PagerAdapter {
                 intent.putExtra(Constant.CHANNEL_AVG_RATE, itemChannel.getChannelAvgRate());
                 intent.putExtra(Constant.CHANNEL_URL, itemChannel.getChannelUrl());
 
-                mInterstitialAd = new InterstitialAd(context);
-                mInterstitialAd.setAdUnitId(inter);
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        mInterstitialAd.show();
-                        // Code to be executed when an ad finishes loading.
-                    }
+                Ads ads = new Ads();
 
+                if (SplashActivity.ads.equals("admob")){
+                    ads.showinter(context,SplashActivity.inter);
+                }
+                else {
+                    ads.showinterfb(context,faninter);
+                }
+                ads.setCustomObjectListener(new Ads.MyCustomObjectListener() {
                     @Override
-                    public void onAdFailedToLoad(int errorCode) {
+                    public void onAdsfinish() {
                         context.startActivity(intent);
 
-                        // Code to be executed when an ad request fails.
                     }
 
                     @Override
-                    public void onAdOpened() {
-                        // Code to be executed when the ad is displayed.
-                    }
+                    public void onRewardOk() {
 
-                    @Override
-                    public void onAdClicked() {
-                        // Code to be executed when the user clicks on an ad.
-                    }
-
-                    @Override
-                    public void onAdLeftApplication() {
-                        // Code to be executed when the user has left the app.
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        context.startActivity(intent);
-                        // Code to be executed when the interstitial ad is closed.
                     }
                 });
 

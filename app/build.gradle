@@ -60,6 +60,9 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     implementation 'com.google.android.ump:user-messaging-platform:1.0.0'
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+    implementation 'com.facebook.android:audience-network-sdk:5.11.0'
+    implementation 'com.kaopiz:kprogresshud:1.0.2'
+
 
 
 

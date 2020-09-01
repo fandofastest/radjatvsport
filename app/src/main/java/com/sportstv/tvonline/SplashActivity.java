@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.sportstv.util.Ads;
 import com.sportstv.util.Constant;
 
 import org.json.JSONException;
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     MyApplication App;
     private boolean mIsBackButtonPressed;
     private static final int SPLASH_DURATION = 2000;
-    public static String statususer,banner,inter,admobappid,movieapk,statusapp,apkupdate;
+    public static String statususer,banner,inter,admobappid,movieapk,statusapp,apkupdate,faninter,fanbanner,ads;
     public static String defaultimage="https://fando.xyz/tvku.jpg";
      InterstitialAd mInterstitialAd;
 
@@ -72,7 +73,9 @@ public class SplashActivity extends AppCompatActivity {
                        admobappid=response.getString("admobappid");
                        apkupdate=response.getString("apkupdate");
                        statusapp=response.getString("statusapp");
-
+                        faninter=response.getString("faninter");
+                        fanbanner=response.getString("fanbanner");
+                        ads=response.getString("ads");
 
                     Button button= findViewById(R.id.buttonstart);
                     ProgressBar progressBar =findViewById(R.id.progressbar);
@@ -91,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
 
                        }
                        else{
-                        button.setOnClickListener(view -> showinter());
+                        button.setOnClickListener(view -> kehome());
 
                        }
 
@@ -162,59 +165,33 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    public  void showinter() {
 
-        Button button= findViewById(R.id.buttonstart);
-        ProgressBar progressBar =findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.VISIBLE);
-        button.setVisibility(View.GONE);
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(inter);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener() {
+    public  void kehome(){
+        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+
+        Ads ads = new Ads();
+
+        if (SplashActivity.ads.equals("admob")){
+            ads.showinter(SplashActivity.this,SplashActivity.inter);
+        }
+        else {
+            ads.showinterfb(SplashActivity.this,faninter);
+        }
+        ads.setCustomObjectListener(new Ads.MyCustomObjectListener() {
             @Override
-            public void onAdLoaded() {
-                mInterstitialAd.show();
-                // Code to be executed when an ad finishes loading.
+            public void onAdsfinish() {
+                startActivity(intent);
+                finish();
             }
 
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-                kehome();
+            public void onRewardOk() {
 
-                // Code to be executed when an ad request fails.
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                kehome();
-                // Code to be executed when the interstitial ad is closed.
             }
         });
 
 
-    }
-
-    public  void kehome(){
-        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 

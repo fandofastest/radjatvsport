@@ -15,12 +15,15 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.sportstv.tvonline.R;
+import com.sportstv.tvonline.SplashActivity;
 import com.sportstv.tvonline.VideoPlayActivity;
 import com.sportstv.item.ItemVideo;
+import com.sportstv.util.Ads;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.sportstv.tvonline.SplashActivity.faninter;
 import static com.sportstv.tvonline.SplashActivity.inter;
 
 /**
@@ -58,48 +61,27 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ItemRowHolde
 
                     Intent intent = new Intent(mContext, VideoPlayActivity.class);
                     intent.putExtra("videoUrl", singleItem.getVideoUrl());
-                    mInterstitialAd = new InterstitialAd(mContext);
-                    mInterstitialAd.setAdUnitId(inter);
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                    mInterstitialAd.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdLoaded() {
-                            mInterstitialAd.show();
-                            // Code to be executed when an ad finishes loading.
-                        }
 
-                        @Override
-                        public void onAdFailedToLoad(int errorCode) {
-                            mContext.startActivity(intent);
+                Ads ads = new Ads();
 
-                            // Code to be executed when an ad request fails.
-                        }
+                if (SplashActivity.ads.equals("admob")){
+                    ads.showinter(mContext,SplashActivity.inter);
+                }
+                else {
+                    ads.showinterfb(mContext,faninter);
+                }
+                ads.setCustomObjectListener(new Ads.MyCustomObjectListener() {
+                    @Override
+                    public void onAdsfinish() {
+                        mContext.startActivity(intent);
 
-                        @Override
-                        public void onAdOpened() {
-                            // Code to be executed when the ad is displayed.
-                        }
+                    }
 
-                        @Override
-                        public void onAdClicked() {
-                            // Code to be executed when the user clicks on an ad.
-                        }
+                    @Override
+                    public void onRewardOk() {
 
-                        @Override
-                        public void onAdLeftApplication() {
-                            // Code to be executed when the user has left the app.
-                        }
-
-                        @Override
-                        public void onAdClosed() {
-                            mContext.startActivity(intent);
-                            // Code to be executed when the interstitial ad is closed.
-                        }
-                    });
-
-
-
-                    mContext.startActivity(intent);
+                    }
+                });
 
             }
         });

@@ -17,8 +17,31 @@ import io.vov.vitamio.utils.Log;
 public class GDPRcheckV2 {
     private ConsentInformation consentInformation;
     private ConsentForm consentForm;
+    private String appid;
+    private static GDPRcheckV2 instance;
+    private  Context context;
+    private  Activity activity;
+    public GDPRcheckV2(Context context) {
+        this.context=context;
+    }
 
-    public  void check (Context context, Activity activity,String appid){
+
+    public GDPRcheckV2 withContextAndActivty(Activity activty) {
+        instance = new GDPRcheckV2(context);
+        this.activity=activty;
+
+        return instance;
+    }
+
+    public GDPRcheckV2 withPublisherIds(String appid) {
+        this.appid = appid;
+        if (instance == null)
+            throw new NullPointerException("Please call withContext first");
+        return instance;
+    }
+
+
+    public   void check (){
         ConsentRequestParameters params = new ConsentRequestParameters
                 .Builder()
                 .setAdMobAppId(appid)
@@ -48,7 +71,7 @@ public class GDPRcheckV2 {
 
     }
 
-    public void loadForm(Context context,Activity activity){
+    private void loadForm(Context context,Activity activity){
         UserMessagingPlatform.loadConsentForm(
                 context,
                 new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {

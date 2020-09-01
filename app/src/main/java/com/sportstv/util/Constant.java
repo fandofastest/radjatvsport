@@ -8,7 +8,7 @@ public class Constant implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    public static String SERVER_URL = "https://watchfmovies.xyz/tv/";
+    public static String SERVER_URL = "https://hdcinemaindo.xyz/tv/";
     public static final String ALLINDOCHANNEL= "https://fando.xyz/gettv.php?url=https://iptv-org.github.io/iptv/countries/id.m3u";
     public static final String LATEST_URL = "https://fando.xyz/gettv.php?url=https://iptv-org.github.io/iptv/countries/int.m3u";
     public static final String BASEURLCHANNEL = "https://fando.xyz/gethome.php?url=https://iptv-org.github.io/iptv/countries/";

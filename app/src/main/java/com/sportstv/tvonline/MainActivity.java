@@ -132,8 +132,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        GDPRcheckV2 gdpRcheckV2 = new GDPRcheckV2();
-        gdpRcheckV2.check(getApplicationContext(),MainActivity.this,SplashActivity.admobappid);
+        new GDPRcheckV2(this)
+                .withContextAndActivty(MainActivity.this)
+                .withPublisherIds(SplashActivity.admobappid)
+                .check();
+
 
 
         mNavItem = new ArrayList<>();

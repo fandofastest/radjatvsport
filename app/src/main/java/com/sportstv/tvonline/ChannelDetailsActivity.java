@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +33,7 @@ import android.widget.Toast;
 import com.sportstv.adapter.RelatedAdapter;
 import com.sportstv.db.DatabaseHelper;
 import com.sportstv.item.ItemChannel;
-import com.sportstv.util.BannerAds;
+import com.sportstv.util.Ads;
 import com.sportstv.util.Constant;
 import com.sportstv.util.ItemOffsetDecoration;
 import com.sportstv.util.NetworkUtils;
@@ -74,7 +76,10 @@ public class ChannelDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         LinearLayout mAdViewLayout = findViewById(R.id.adView);
-        BannerAds.ShowBannerAds(getApplicationContext(), mAdViewLayout);
+
+        Ads ads  = new Ads();
+        Display display =getWindowManager().getDefaultDisplay();
+        ads.ShowBannerAds(getApplicationContext(),mAdViewLayout,SplashActivity.fanbanner,SplashActivity.banner,display);
 
         myApp = MyApplication.getInstance();
         databaseHelper = new DatabaseHelper(getApplicationContext());

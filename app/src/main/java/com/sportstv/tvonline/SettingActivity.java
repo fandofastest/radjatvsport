@@ -6,14 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
-import com.sportstv.util.BannerAds;
 import com.onesignal.OneSignal;
+import com.sportstv.util.Ads;
 
 
 public class SettingActivity extends AppCompatActivity {
@@ -34,7 +36,9 @@ public class SettingActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         LinearLayout mAdViewLayout = findViewById(R.id.adView);
-        BannerAds.ShowBannerAds(getApplicationContext(), mAdViewLayout);
+        Ads ads  = new Ads();
+        Display display =getWindowManager().getDefaultDisplay();
+        ads.ShowBannerAds(getApplicationContext(),mAdViewLayout,SplashActivity.fanbanner,SplashActivity.banner,display);
         MyApp = MyApplication.getInstance();
         notificationSwitch = findViewById(R.id.switch_notification);
         playerSwitch = findViewById(R.id.switch_player);
